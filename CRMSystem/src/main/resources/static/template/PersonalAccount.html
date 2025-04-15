@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Личный кабинет CRM</title>
+    <link rel="stylesheet" href="css/PersonalAccountStyle.css">
+</head>
+<body data-privilege="low">
+<!-- Сайдбар -->
+<div class="sidebar">
+    <h2 onclick="showPersonalInfo()">Меню</h2>
+    <button onclick="showSection('create-doc')">Создать документ</button>
+    <button onclick="showSection('view-docs')">Просмотреть документы</button>
+    <button onclick="showSection('stats')">Статистика</button>
+    <button class="admin-button" onclick="showModal('add-employee')">Добавить сотрудника</button>
+    <button class="admin-button" onclick="showModal('remove-employee')">Удалить сотрудника</button>
+</div>
+
+<!-- Основной контент -->
+<div class="main-content">
+    <!-- Информация о сотруднике -->
+    <div class="employee-card">
+        <h2>Иванов Иван Иванович</h2>
+        <p>Должность: Врач</p>
+        <p>Отдел: Хирургия</p>
+        <p>Привилегия: Низкий</p>
+    </div>
+
+    <!-- Создание документа -->
+    <div id="create-doc" class="document-editor" style="display: none;">
+        <h2>Новый документ</h2>
+        <input type="text" placeholder="Название документа" class="doc-title">
+        <select id="template-select">
+            <option>Выберите шаблон</option>
+            <option>Отчёт</option>
+            <option>Договор</option>
+        </select>
+        <textarea placeholder="Содержание документа"></textarea>
+        <div>
+            <button onclick="saveDocument()">Сохранить</button>
+            <button onclick="sendDocument()">Отправить</button>
+            <button onclick="toggleEdit()">Режим редактирования</button>
+        </div>
+    </div>
+
+    <!-- Список документов -->
+    <div id="view-docs" class="documents-list" style="display: none;">
+        <input type="text" placeholder="Поиск документов..." id="search-input">
+        <div id="documents-container">
+            <!-- Документы будут загружаться здесь -->
+        </div>
+    </div>
+
+    <!-- Статистика -->
+    <div id="stats" style="display: none;">
+        <h2>Статистика отдела</h2>
+        <div id="chart-container" style="width: 600px; height: 400px;"></div>
+    </div>
+</div>
+
+<!-- Модальные окна -->
+<div id="add-employee" class="modal">
+    <span class="close-modal" onclick="closeModal('add-employee')">&times;</span>
+    <h3>Добавить сотрудника</h3>
+    <input type="text" placeholder="ФИО">
+    <input type="email" placeholder="Email">
+    <select>
+        <option>Выберите отдел</option>
+        <option>Продажи</option>
+        <option>Поддержка</option>
+    </select>
+    <button onclick="addEmployee()">Добавить</button>
+</div>
+
+<script src="js/PersonalAccountScript.js"></script>
+</body>
+</html>
