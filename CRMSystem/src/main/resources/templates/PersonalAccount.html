@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Личный кабинет CRM</title>
     <link rel="stylesheet" href="css/PersonalAccountStyle.css">
 </head>
-<body data-privilege="low">
+<body th:data-privilege="${user.privilegeLevel}">
 <!-- Сайдбар -->
 <div class="sidebar">
     <h2 onclick="showPersonalInfo()">Меню</h2>
@@ -20,10 +20,9 @@
 <div class="main-content">
     <!-- Информация о сотруднике -->
     <div class="employee-card">
-        <h2>Иванов Иван Иванович</h2>
-        <p>Должность: Врач</p>
-        <p>Отдел: Хирургия</p>
-        <p>Привилегия: Низкий</p>
+        <h2 th:text="${user.fullName}">Некорректное имя</h2>
+        <p>Должность: <span th:text="${user.position}">Нет</span></p>
+        <p>Отдел: <span th:text="${user.department}">Нет</span></p>
     </div>
 
     <!-- Создание документа -->

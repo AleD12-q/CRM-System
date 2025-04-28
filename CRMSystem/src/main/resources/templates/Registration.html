@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru" >
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация в CRM</title>
+    <link rel="stylesheet" href="css/RegistrationStyle.css">
+</head>
+<body>
+<div class="registration-container">
+    <h2>Регистрация сотрудника</h2>
+    <form action="register" method="post" id="registration-form">
+        <div class="form-group">
+            <label for="fullName">ФИО:</label>
+            <input type="text" id="fullName" name="fullName" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div class="form-group">
+            <label for="position">Должность:</label>
+            <select id="position" name="position">
+                <option value="Врач">Врач</option>
+                <option value="Заведующий">Заведующий</option>
+                <option value="Главный врач">Главный Врач</option>
+                <option value="admin">Системный администратор</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="department">Отдел:</label>
+            <select id="department" name="department">
+                <option value="Хирургия">Хирургия</option>
+                <option value="Травматология">Травматология</option>
+                <option value="Участковое отделение">Участковое</option>
+            </select>
+        </div>
+        <button type="submit" class="submit-btn">Зарегистрироваться</button>
+    </form>
+</div>
+
+<script src="js/RegistrationScript.js"></script>
+</body>
+</html>
