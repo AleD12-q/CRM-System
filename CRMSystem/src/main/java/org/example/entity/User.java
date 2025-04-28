@@ -1,6 +1,7 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
+import org.example.entity.enums.Privileges;
 
 @Entity
 @Table(name = "users")
@@ -14,7 +15,7 @@ public class User {
     private String position;
     private String department;
 
-    private String privilegeLevel = "low";
+    private Privileges privilegeLevel = Privileges.Low;
 
     public User() {
     }
@@ -66,11 +67,11 @@ public class User {
         this.position = position;
     }
 
-    public String getPrivilegeLevel() {
+    public Privileges getPrivilegeLevel() {
         return privilegeLevel;
     }
 
-    public void setPrivilegeLevel(String privilege) {
+    public void setPrivilegeLevel(Privileges privilege) {
         this.privilegeLevel = privilege;
     }
 

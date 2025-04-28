@@ -115,3 +115,85 @@ body[data-privilege="highest"] .sidebar button.admin-button {
     color: #666;
     padding: 20px;
 }
+
+
+/* Кнопка выхода */
+.logout-btn {
+    display: block;
+    width: calc(100% - 40px); /* Такая же ширина как у других кнопок */
+    padding: 12px; /* Такой же отступ */
+    margin: 8px 0; /* Такой же отступ */
+    background: #d9534f;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    bottom: 20px;
+    left: 20px; /* Добавляем отступ слева как у других кнопок */
+    font-size: 16px; /* Такой же размер шрифта */
+}
+
+.logout-btn:hover {
+    background: #c9302c;
+}
+
+/* Список задач */
+.tasks-list {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.task-item {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
+    border-left: 5px solid #5cb85c;
+    position: relative;
+}
+
+.task-item.overdue-25 {
+    border-left-color: #f0ad4e;
+}
+
+.task-item.overdue-full {
+    border-left-color: #d9534f;
+}
+
+.task-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.task-deadline {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.task-assignee {
+    color: #666;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+.task-description {
+    margin-top: 10px;
+}
+
+/* Модальное окно создания задачи */
+#create-task {
+    width: 500px;
+}
+
+#create-task textarea {
+    width: 100%;
+    height: 100px;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+#create-task input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+}

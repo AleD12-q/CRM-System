@@ -17,11 +17,26 @@ body {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     width: 400px;
     text-align: center;
+    position: relative;
 }
 
 .registration-container h2 {
     color: #2A5CAA;
     margin-bottom: 20px;
+}
+
+/* Кнопка "Назад" */
+.back-btn {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    color: #2A5CAA;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.back-btn:hover {
+    text-decoration: underline;
 }
 
 /* Форма */
@@ -60,4 +75,16 @@ body {
 
 .submit-btn:hover {
     background: #1E457B;
+}
+
+/* Ссылка на вход */
+.login-link {
+    display: block;
+    margin-top: 15px;
+    color: #2A5CAA;
+    text-decoration: none;
+}
+
+.login-link:hover {
+    text-decoration: underline;
 }

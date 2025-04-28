@@ -11,9 +11,12 @@
     <h2 onclick="showPersonalInfo()">Меню</h2>
     <button onclick="showSection('create-doc')">Создать документ</button>
     <button onclick="showSection('view-docs')">Просмотреть документы</button>
+    <button onclick="showSection('tasks')">Задачи</button>
     <button onclick="showSection('stats')">Статистика</button>
     <button class="admin-button" onclick="showModal('add-employee')">Добавить сотрудника</button>
     <button class="admin-button" onclick="showModal('remove-employee')">Удалить сотрудника</button>
+    <button class="admin-button" onclick="showModal('create-task')" id="create-task-btn">Создать задачу</button>
+    <button class="logout-btn" onclick="logout()">Выйти</button>
 </div>
 
 <!-- Основной контент -->
@@ -50,6 +53,14 @@
         </div>
     </div>
 
+    <!-- Задачи -->
+    <div id="tasks" class="tasks-list" style="display: none;">
+        <h2>Мои задачи</h2>
+        <div id="tasks-container">
+            <!-- Задачи будут загружаться здесь -->
+        </div>
+    </div>
+
     <!-- Статистика -->
     <div id="stats" style="display: none;">
         <h2>Статистика отдела</h2>
@@ -69,6 +80,27 @@
         <option>Поддержка</option>
     </select>
     <button onclick="addEmployee()">Добавить</button>
+</div>
+
+<div id="remove-employee" class="modal">
+    <span class="close-modal" onclick="closeModal('remove-employee')">&times;</span>
+    <h3>Удалить сотрудника</h3>
+    <select id="employee-to-remove">
+        <option>Выберите сотрудника</option>
+    </select>
+    <button onclick="removeEmployee()">Удалить</button>
+</div>
+
+<div id="create-task" class="modal">
+    <span class="close-modal" onclick="closeModal('create-task')">&times;</span>
+    <h3>Создать задачу</h3>
+    <input type="text" id="task-title" placeholder="Название задачи">
+    <textarea id="task-description" placeholder="Описание задачи"></textarea>
+    <select id="task-assignee">
+        <option>Выберите исполнителя</option>
+    </select>
+    <input type="date" id="task-deadline">
+    <button onclick="createTask()">Создать</button>
 </div>
 
 <script src="js/PersonalAccountScript.js"></script>

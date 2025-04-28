@@ -7,6 +7,7 @@ public class RegistrationRequest {
 
     private String position;
     private String department;
+    private String privilegeKey;
 
 
     public String getFullName() {
@@ -47,5 +48,13 @@ public class RegistrationRequest {
 
     public void setDepartment(String department) {
         this.department = department;
+    }
+
+    public String getPrivilegeKey() {
+        return privilegeKey;
+    }
+
+    public void setPrivilegeKey(String privilegeKey) {
+        this.privilegeKey = privilegeKey;
     }
 }

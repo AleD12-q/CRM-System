@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" >
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Регистрация в CRM</title>
@@ -7,6 +7,7 @@
 </head>
 <body>
 <div class="registration-container">
+    <a href="/" class="back-btn">← Вернуться на главную</a>
     <h2>Регистрация сотрудника</h2>
     <form action="register" method="post" id="registration-form">
         <div class="form-group">
@@ -30,7 +31,7 @@
                 <option value="admin">Системный администратор</option>
             </select>
         </div>
-        <div class="form-group">
+        <div class="form-group" id="department-group">
             <label for="department">Отдел:</label>
             <select id="department" name="department">
                 <option value="Хирургия">Хирургия</option>
@@ -38,8 +39,13 @@
                 <option value="Участковое отделение">Участковое</option>
             </select>
         </div>
+        <div class="form-group" id="privilege-key-group" style="display: none;">
+            <label for="privilegeKey">Ключ привилегий:</label>
+            <input type="password" id="privilegeKey" name="privilegeKey">
+        </div>
         <button type="submit" class="submit-btn">Зарегистрироваться</button>
     </form>
+    <a href="/login" class="login-link">У меня уже есть аккаунт</a>
 </div>
 
 <script src="js/RegistrationScript.js"></script>
