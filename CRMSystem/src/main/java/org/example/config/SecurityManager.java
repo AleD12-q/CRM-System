@@ -1,12 +1,18 @@
 package org.example.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.example.entity.enums.Privileges;
 import org.example.repository.GlobalData;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Random;
-
+@Slf4j
 public class SecurityManager {
+
+    private static final Logger log = LoggerFactory.getLogger(SecurityManager.class);
 
     public static String createAccessKey(Privileges level){
         Random random = new Random();
@@ -26,4 +32,6 @@ public class SecurityManager {
     TODO:
         Реализовать метод шифрования паролей
      */
+
+
 }

@@ -31,4 +31,10 @@ public class LoginController {
         );
 
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Map<String, String>> logoutUser() {
+        UserController.currentEmail = "";
+        return ResponseEntity.ok(Map.of("message", "Успешный выход"));
+    }
 }
