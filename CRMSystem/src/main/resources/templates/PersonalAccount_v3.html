@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Личный кабинет CRM</title>
-    <link rel="stylesheet" href="css/PersonalAccountStyle.css">
+    <link rel="stylesheet" href="css/PersonalAccountStyle_v02.css">
 </head>
-<body th:data-privilege="${user.privilegeLevel}">
+<body th:data-privilege="${user.privilegeLevel}" th:attr="allusers=${#lists.toList(allusers)}">
 <!-- Сайдбар -->
 <div class="sidebar">
     <h2 onclick="showPersonalInfo()">Меню</h2>
@@ -13,8 +13,7 @@
     <button onclick="showSection('view-docs')">Просмотреть документы</button>
     <button onclick="showSection('tasks')">Задачи</button>
     <button onclick="showSection('stats')">Статистика</button>
-    <button class="admin-button" onclick="showModal('add-employee')">Добавить сотрудника</button>
-    <button class="admin-button" onclick="showModal('remove-employee')">Удалить сотрудника</button>
+    <button class="admin-button" onclick="showSection('employees-list')" id="employees-list-btn">Список сотрудников</button>
     <button class="admin-button" onclick="showModal('create-task')" id="create-task-btn">Создать задачу</button>
     <button class="logout-btn" onclick="logout()">Выйти</button>
 </div>
@@ -66,43 +65,28 @@
         <h2>Статистика отдела</h2>
         <div id="chart-container" style="width: 600px; height: 400px;"></div>
     </div>
+
+    <!-- Список сотрудников -->
+    <div id="employees-list" class="documents-list" style="display: none;">
+        <h2>Список сотрудников</h2>
+        <input type="text" placeholder="Поиск сотрудников..." id="employee-search-input">
+        <div id="employees-container">
+            <!-- Сотрудники будут загружаться здесь -->
+        </div>
+    </div>
 </div>
 
 <!-- Модальные окна -->
-<div id="add-employee" class="modal">
-    <span class="close-modal" onclick="closeModal('add-employee')">&times;</span>
-    <h3>Добавить сотрудника</h3>
-    <input type="text" placeholder="ФИО">
-    <input type="email" placeholder="Email">
-    <select>
-        <option>Выберите отдел</option>
-        <option>Продажи</option>
-        <option>Поддержка</option>
-    </select>
-    <button onclick="addEmployee()">Добавить</button>
-</div>
-
-<div id="remove-employee" class="modal">
-    <span class="close-modal" onclick="closeModal('remove-employee')">&times;</span>
-    <h3>Удалить сотрудника</h3>
-    <select id="employee-to-remove">
-        <option>Выберите сотрудника</option>
-    </select>
-    <button onclick="removeEmployee()">Удалить</button>
-</div>
-
 <div id="create-task" class="modal">
     <span class="close-modal" onclick="closeModal('create-task')">&times;</span>
     <h3>Создать задачу</h3>
-    <input type="text" id="task-title" placeholder="Название задачи">
-    <textarea id="task-description" placeholder="Описание задачи"></textarea>
-    <select id="task-assignee">
-        <option>Выберите исполнителя</option>
-    </select>
-    <input type="date" id="task-deadline">
+    <input type="text" id="taskTitle" placeholder="Название задачи">
+    <textarea id="taskDescription" placeholder="Описание задачи"></textarea>
+    <input type="number" id="taskAssignee" placeholder="Введите id исполнителя">
+    <input type="date" id="taskDeadline">
     <button onclick="createTask()">Создать</button>
 </div>
 
-<script src="js/PersonalAccountScript.js"></script>
+<script src="js/PersonalAccountScript_v03.js"></script>
 </body>
 </html>

@@ -39,7 +39,8 @@ public class UserController {
 
         User user = userOptional.get();
         model.addAttribute("user", user);
-        return "PersonalAccount";
+        model.addAttribute("allusers", userRepository.findAll());
+        return "PersonalAccount_v3";
     }
 
 }

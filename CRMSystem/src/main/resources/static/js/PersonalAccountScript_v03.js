@@ -37,7 +37,7 @@ function loadTasks() {
             title: "Подготовить отчет",
             description: "Ежеквартальный отчет по лечению",
             assignee: "Иванов И.И.",
-            deadline: "2023-12-15",
+            deadline: "2025-05-05",
             status: "active"
         },
         {
@@ -45,15 +45,15 @@ function loadTasks() {
             title: "Провести встречу",
             description: "Совещание с клиентом",
             assignee: "Петров П.П.",
-            deadline: "2023-11-30",
+            deadline: "2025-04-29",
             status: "overdue-25"
         },
         {
             id: 3,
-            title: "Обновить базу данных",
-            description: "Перенос данных на новый сервер",
+            title: "Провести перерасчет",
+            description: "Провести перерасчет лекарств на складе",
             assignee: "Сидоров С.С.",
-            deadline: "2023-11-10",
+            deadline: "2025-03-10",
             status: "overdue-full"
         }
     ];
@@ -96,19 +96,74 @@ function logout() {
 }
 
 function createTask() {
-    const title = document.getElementById('task-title').value;
-    const description = document.getElementById('task-description').value;
-    const assignee = document.getElementById('task-assignee').value;
-    const deadline = document.getElementById('task-deadline').value;
 
-    // Здесь будет отправка данных на сервер
-    console.log({ title, description, assignee, deadline });
+    const formData = {
+        taskTitle: document.getElementById('taskTitle').value,
+        taskDescription: document.getElementById('taskDescription').value,
+        taskAssignee: document.getElementById('taskAssignee').value,
+        taskDeadline: document.getElementById('taskDeadline').value
+    };
+
+    fetch('/api/create-task', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(async response => {
+            const data = await response.json();
+
+            if (response.ok) {
+                alert('Успешно!')
+            } else {
+                alert(data.error || 'Ошибка регистрации!');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Сетевая ошибка');
+        });
+
 
     closeModal('create-task');
-    loadTasks(); // Перезагружаем список задач
+    loadTasks();
 }
 
-// Проверка привилегий и скрытие кнопок
+// Добавьте эту функцию для загрузки сотрудников
+function loadEmployees() {
+    const privilege = document.body.getAttribute('data-privilege') || 'Low';
+    const userDepartment = document.querySelector('.employee-card p:nth-child(3) span').textContent;
+
+    // Получаем всех пользователей из атрибута (в реальном приложении это будет fetch запрос)
+    const allUsers = JSON.parse(document.body.getAttribute('allusers') || '[]');
+
+    // Фильтруем пользователей в зависимости от привилегий
+    let employeesToShow = [];
+    if (privilege === 'Medium') {
+        employeesToShow = allUsers.filter(user => user.department === userDepartment);
+    } else if (['High', 'VeryHigh'].includes(privilege)) {
+        employeesToShow = allUsers;
+    }
+
+    const container = document.getElementById('employees-container');
+    container.innerHTML = employeesToShow.map(employee => `
+        <div class="employee-item">
+            <h4>${employee.fullName}</h4>
+            <div class="employee-details">
+                <p><strong>Должность:</strong> ${employee.position}</p>
+                <p><strong>Отдел:</strong> ${employee.department}</p>
+                <p><strong>Email:</strong> ${employee.email}</p>
+            </div>
+        </div>
+    `).join('');
+
+    if(employeesToShow.length === 0) {
+        container.innerHTML = '<p class="empty-list">Сотрудники не найдены</p>';
+    }
+}
+
+// Обновите функцию checkPrivileges
 function checkPrivileges() {
     const privilege = document.body.getAttribute('data-privilege') || 'Low';
     const adminButtons = document.querySelectorAll('.admin-button');
@@ -133,10 +188,11 @@ function checkPrivileges() {
     }
 }
 
-// Инициализация
+// Обновите функцию инициализации
 window.onload = () => {
     loadDocuments();
     loadTasks();
+    loadEmployees(); // Добавьте эту строку
     checkPrivileges();
     
     if (typeof Chart !== 'undefined') {

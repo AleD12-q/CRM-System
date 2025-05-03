@@ -65,7 +65,7 @@ body[data-privilege="VeryHigh"] .sidebar button.admin-button {
 }
 
 .document-editor textarea {
-    width: 100%;
+    width: 90%;
     height: 300px;
     margin: 10px 0;
     padding: 10px;
@@ -182,18 +182,46 @@ body[data-privilege="VeryHigh"] .sidebar button.admin-button {
 
 /* Модальное окно создания задачи */
 #create-task {
-    width: 500px;
+    width: 600px;
 }
 
 #create-task textarea {
-    width: 100%;
+    width: 80%;
     height: 100px;
     margin: 10px 0;
     padding: 10px;
 }
 
 #create-task input[type="date"] {
-    width: 100%;
+    width: 80%;
     padding: 10px;
     margin: 10px 0;
+}
+
+
+/* Список сотрудников */
+.employee-item {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
+    background: white;
+    border-radius: 4px;
+}
+
+.employee-item h4 {
+    margin: 0 0 5px 0;
+    color: #2A5CAA;
+}
+
+.employee-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.employee-details p {
+    margin: 5px 0;
+    font-size: 0.9em;
+    color: #666;
 }
