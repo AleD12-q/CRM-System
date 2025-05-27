@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -26,27 +29,42 @@ public class RequestController {
     @Autowired
     private TaskRepository taskRepository;
     @PostMapping(value = "/create-task")
-    public ResponseEntity<Map<String, String>> registerUser(
+    public ResponseEntity<Map<String, String>> createTask(
             @RequestBody TaskRequest request) {
 
+        // Валидация данных
         if (request.getTaskTitle() == null || request.getTaskTitle().isEmpty()) {
             return ResponseEntity.badRequest().body(Map.of("error", "Название задачи обязательно"));
         }
 
-        Optional<User> user = userRepository.findById(request.getTaskAssignee());
-        if (user.isEmpty()) {
-            return ResponseEntity.badRequest().body(Map.of("error", "Исполнитель не найден"));
+        if (request.getTaskAssignees() == null || request.getTaskAssignees().isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Необходимо выбрать хотя бы одного исполнителя"));
         }
 
-            // Создание задачи
-        Task newTask = new Task(
-                request.getTaskTitle(),
-                request.getTaskDescription(),
-                user.get(),
-                request.getTaskDeadline()
-        );
-        taskRepository.save(newTask);
-        return ResponseEntity.ok(Map.of("message", "Успешно!"));
+        List<User> users = userRepository.findAllById(request.getTaskAssignees());
+        if (users.isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Исполнители не найдены"));
+        }
+
+        // Создание задачи для каждого исполнителя
+        List<Task> createdTasks = new ArrayList<>();
+        for (User user : users) {
+            Task newTask = new Task(
+                    request.getTaskTitle(),
+                    request.getTaskDescription(),
+                    user,
+                    request.getTaskDeadline()
+            );
+            createdTasks.add(taskRepository.save(newTask));
+        }
+
+        return ResponseEntity.ok(Map.of(
+                "message", "Успешно создано задач: " + createdTasks.size(),
+                "taskIds", createdTasks.stream()
+                        .map(Task::getId)
+                        .map(Object::toString)
+                        .collect(Collectors.joining(","))
+        ));
     }
 }
 

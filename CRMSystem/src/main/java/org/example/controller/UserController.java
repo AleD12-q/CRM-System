@@ -3,10 +3,12 @@ package org.example.controller;
 import org.example.entity.Task;
 import org.example.entity.User;
 import org.example.model.TaskDTO;
+import org.example.model.TaskStatusDTO;
 import org.example.model.UserDTO;
 import org.example.repository.TaskRepository;
 import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -67,5 +69,20 @@ public class UserController {
         return ResponseEntity.ok(taskDTOS);
     }
 
+    @GetMapping("/task-stats")
+    public ResponseEntity<TaskStatusDTO> getTaskStats() {
+        try {
+            List<Task> tasks = taskRepository.findAll();
+            TaskStatusDTO stats = new TaskStatusDTO();
+
+            for(Task task : tasks) {
+                stats.countStatus(task.getStatus());
+            }
+
+            return ResponseEntity.ok(stats);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }
 

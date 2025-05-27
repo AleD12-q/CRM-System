@@ -1,11 +1,12 @@
 package org.example.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class TaskRequest {
     private String taskTitle;
     private String taskDescription;
-    private Long taskAssignee;
+    private List<Long> taskAssignees;
     private Date taskDeadline;
 
     public String getTaskTitle() {
@@ -24,12 +25,12 @@ public class TaskRequest {
         this.taskDescription = taskDescription;
     }
 
-    public Long getTaskAssignee() {
-        return taskAssignee;
+    public List<Long> getTaskAssignees() {
+        return taskAssignees;
     }
 
-    public void setTaskAssignee(Long taskAssignee) {
-        this.taskAssignee = taskAssignee;
+    public void setTaskAssignees(List<Long> taskAssignees) {
+        this.taskAssignees = taskAssignees;
     }
 
     public Date getTaskDeadline() {

@@ -88,20 +88,32 @@ body[data-privilege="VeryHigh"] .sidebar button.admin-button {
 .modal {
     display: none;
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1000;
+    overflow: auto;
+}
+
+.modal-content {
     background: white;
-    padding: 20px;
+    margin: 5% auto;
+    padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    width: 60%;
+    max-width: 700px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
 }
 
 .close-modal {
     position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 24px;
+    top: 15px;
+    right: 25px;
+    font-size: 28px;
+    font-weight: bold;
     cursor: pointer;
     color: #666;
 }
@@ -116,21 +128,20 @@ body[data-privilege="VeryHigh"] .sidebar button.admin-button {
     padding: 20px;
 }
 
-
 /* Кнопка выхода */
 .logout-btn {
     display: block;
-    width: calc(100% - 40px); /* Такая же ширина как у других кнопок */
-    padding: 12px; /* Такой же отступ */
-    margin: 8px 0; /* Такой же отступ */
+    width: calc(100% - 40px);
+    padding: 12px;
+    margin: 8px 0;
     background: #d9534f;
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 4px;
     bottom: 20px;
-    left: 20px; /* Добавляем отступ слева как у других кнопок */
-    font-size: 16px; /* Такой же размер шрифта */
+    left: 20px;
+    font-size: 16px;
 }
 
 .logout-btn:hover {
@@ -180,48 +191,141 @@ body[data-privilege="VeryHigh"] .sidebar button.admin-button {
     margin-top: 10px;
 }
 
-/* Модальное окно создания задачи */
-#create-task {
-    width: 600px;
+/* Календарь */
+#calendar {
+    margin-top: 20px;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-#create-task textarea {
-    width: 80%;
-    height: 100px;
-    margin: 10px 0;
+/* Формы в модальных окнах */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.submit-btn {
+    background: #2A5CAA;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+
+.submit-btn:hover {
+    background: #1E457B;
+}
+
+/* Чекбоксы для выбора исполнителей */
+.checkbox-container {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
     padding: 10px;
 }
 
-#create-task input[type="date"] {
-    width: 80%;
-    padding: 10px;
-    margin: 10px 0;
+.checkbox-item {
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
 }
 
+.checkbox-item:last-child {
+    border-bottom: none;
+}
+
+.checkbox-item input {
+    margin-right: 10px;
+}
 
 /* Список сотрудников */
 .employee-item {
     padding: 15px;
-    border-bottom: 1px solid #eee;
-    margin-bottom: 10px;
-    background: white;
+    border: 1px solid #ddd;
     border-radius: 4px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
 }
 
-.employee-item h4 {
-    margin: 0 0 5px 0;
-    color: #2A5CAA;
+.employee-item:hover {
+    background-color: #f5f5f5;
+}
+
+.employee-item.selected {
+    background-color: #e1f0fa;
+    border-color: #2A5CAA;
 }
 
 .employee-details {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
     margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
 }
 
-.employee-details p {
-    margin: 5px 0;
-    font-size: 0.9em;
-    color: #666;
+/* Кнопки действий с сотрудниками */
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.action-btn {
+    padding: 10px;
+    background: #2A5CAA;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.action-btn:hover {
+    background: #1E457B;
+}
+
+.delete-btn {
+    background: #d9534f;
+}
+
+.delete-btn:hover {
+    background: #c9302c;
+}
+
+/* Диаграммы */
+.chart-container {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }

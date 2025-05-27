@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Личный кабинет CRM</title>
-    <link rel="stylesheet" href="css/PersonalAccountStyle_v02.css">
+    <link rel="stylesheet" href="css/PersonalAccountStyle_v03.css">
 </head>
 <body th:data-privilege="${user.privilegeLevel}">
 <!-- Сайдбар -->
 <div class="sidebar">
     <h2 onclick="showPersonalInfo()">Меню</h2>
+    <button onclick="showPersonalInfo()">Профиль</button>
     <button onclick="showSection('create-doc')">Создать документ</button>
     <button onclick="showSection('view-docs')">Просмотреть документы</button>
     <button onclick="showSection('tasks')">Задачи</button>
@@ -25,6 +26,7 @@
         <h2 th:text="${user.fullName}">Некорректное имя</h2>
         <p>Должность: <span th:text="${user.position}">Нет</span></p>
         <p>Отдел: <span th:text="${user.department}">Нет</span></p>
+        <div id="calendar"></div>
     </div>
 
     <!-- Создание документа -->
@@ -62,8 +64,10 @@
 
     <!-- Статистика -->
     <div id="stats" style="display: none;">
+        <h2>Статистика задач</h2>
+        <div id="task-stats-chart" style="width: 600px; height: 400px;"></div>
         <h2>Статистика отдела</h2>
-        <div id="chart-container" style="width: 600px; height: 400px;"></div>
+        <div id="department-stats-chart" style="width: 600px; height: 400px;"></div>
     </div>
 
     <!-- Список сотрудников -->
@@ -78,15 +82,64 @@
 
 <!-- Модальные окна -->
 <div id="create-task" class="modal">
-    <span class="close-modal" onclick="closeModal('create-task')">&times;</span>
-    <h3>Создать задачу</h3>
-    <input type="text" id="taskTitle" placeholder="Название задачи">
-    <textarea id="taskDescription" placeholder="Описание задачи"></textarea>
-    <input type="number" id="taskAssignee" placeholder="Введите id исполнителя">
-    <input type="date" id="taskDeadline">
-    <button onclick="createTask()">Создать</button>
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal('create-task')">&times;</span>
+        <h3>Создать задачу</h3>
+        <div class="form-group">
+            <label for="taskTitle">Название задачи:</label>
+            <input type="text" id="taskTitle" placeholder="Введите название задачи">
+        </div>
+        <div class="form-group">
+            <label for="taskDescription">Описание:</label>
+            <textarea id="taskDescription" placeholder="Введите описание задачи"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Исполнители:</label>
+            <div id="assignees-checkbox-container" class="checkbox-container">
+                <!-- Чекбоксы будут добавлены динамически -->
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="taskDeadline">Срок выполнения:</label>
+            <input type="date" id="taskDeadline">
+        </div>
+        <button class="submit-btn" onclick="createTask()">Создать задачу</button>
+    </div>
 </div>
 
-<script src="js/PersonalAccountScript_v03.js"></script>
+<!-- Модальное окно для управления сотрудниками -->
+<div id="employee-actions" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal('employee-actions')">&times;</span>
+        <h3>Управление сотрудником</h3>
+        <div id="selected-employee-info"></div>
+        <div class="form-group">
+            <label for="privilege-select">Привилегия:</label>
+            <select id="privilege-select">
+                <option value="Low">Низкий</option>
+                <option value="Medium">Средний</option>
+                <option value="High">Высокий</option>
+                <option value="VeryHigh">Администратор</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="department-select">Отдел:</label>
+            <select id="department-select">
+                <option value="IT">IT</option>
+                <option value="HR">HR</option>
+                <option value="Finance">Финансы</option>
+                <option value="Marketing">Маркетинг</option>
+            </select>
+        </div>
+        <div class="action-buttons">
+            <button class="action-btn" onclick="updateEmployeePrivilege()">Обновить привилегию</button>
+            <button class="action-btn" onclick="transferEmployee()">Перевести в отдел</button>
+            <button class="action-btn delete-btn" onclick="deleteEmployee()">Удалить сотрудника</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="js/PersonalAccountScript_v04.js"></script>
 </body>
 </html>
