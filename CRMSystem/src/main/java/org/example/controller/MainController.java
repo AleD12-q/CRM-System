@@ -18,9 +18,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.Optional;
+
 @Slf4j
 @Controller
 public class MainController {
+    @Autowired
+    private UserRepository userRepository;
 
     private static final Logger log = LoggerFactory.getLogger(MainController.class);
     @Autowired
@@ -44,7 +48,31 @@ public class MainController {
         return "Main";
     }
 
+    public static String currentEmail = "";
 
+
+
+    @GetMapping("/personal-account")
+    public String showPersonalAccountForm(Model model, Principal principal) {
+/*
+        if (principal == null) {
+            return "redirect:/login";
+        }
+
+*/
+        if (currentEmail.isEmpty()){
+            return "redirect:/login";
+        }
+        Optional<User> userOptional = userRepository.findByEmail(currentEmail);
+
+        if (userOptional.isEmpty()) {
+            return "redirect:/error?message=User not found";
+        }
+
+        User user = userOptional.get();
+        model.addAttribute("user", user);
+        return "PersonalAccount_v3";
+    }
 
 
 }

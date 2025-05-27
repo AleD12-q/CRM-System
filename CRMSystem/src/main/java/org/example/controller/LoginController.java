@@ -21,7 +21,7 @@ public class LoginController {
             @RequestBody LoginRequest request) {
 
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            UserController.currentEmail = request.getEmail();
+            MainController.currentEmail = request.getEmail();
             return ResponseEntity.ok(Map.of("message", "Успешный вход"));
 
         }
@@ -34,7 +34,7 @@ public class LoginController {
 
     @PostMapping("/logout")
     public ResponseEntity<Map<String, String>> logoutUser() {
-        UserController.currentEmail = "";
+        MainController.currentEmail = "";
         return ResponseEntity.ok(Map.of("message", "Успешный выход"));
     }
 }

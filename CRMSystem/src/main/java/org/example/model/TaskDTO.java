@@ -1,36 +1,26 @@
-package org.example.entity;
+package org.example.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.OneToOne;
+import org.example.entity.User;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "tasks")
-public class Task {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class TaskDTO {
     private Long id;
     private String title;
     private String description;
-    @OneToOne
-    private User handler;
-    private Date deadline;
 
+    private String assignee;
+    private Date deadline;
     private String status;
 
-    public Task() {
-    }
-
-    public Task(String title, String description, User handler, Date deadline) {
+    public TaskDTO(Long id, String title, String description, String assignee, Date deadline, String status) {
+        this.id = id;
         this.title = title;
         this.description = description;
-        this.handler = handler;
+        this.assignee = assignee;
         this.deadline = deadline;
-        Date now = new Date();
-        status = "active";
-        long diff = now.getTime() - deadline.getTime();
-        if(diff > 0 && diff <= now.getTime() * 0.25) status = "overdue-25";
-        else if (diff > now.getTime() * 0.25) status = "overdue-full";
+        this.status = status;
     }
 
     public Long getId() {
@@ -57,12 +47,12 @@ public class Task {
         this.description = description;
     }
 
-    public User getHandler() {
-        return handler;
+    public String getAssignee() {
+        return assignee;
     }
 
-    public void setHandler(User handler) {
-        this.handler = handler;
+    public void setAssignee(String assignee) {
+        this.assignee = assignee;
     }
 
     public Date getDeadline() {
@@ -75,5 +65,9 @@ public class Task {
 
     public String getStatus() {
         return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

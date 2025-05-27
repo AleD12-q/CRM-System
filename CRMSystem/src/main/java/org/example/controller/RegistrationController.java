@@ -40,7 +40,7 @@ public class RegistrationController {
         User user = new User();
         user.setFullName(request.getFullName());
         user.setEmail(request.getEmail());
-        UserController.currentEmail = request.getEmail();
+        MainController.currentEmail = request.getEmail();
         user.setPassword(request.getPassword());//TODO: Сделать сохранение хэш-кодом
         user.setPosition(request.getPosition());
         if(request.getPosition().equals("admin")){

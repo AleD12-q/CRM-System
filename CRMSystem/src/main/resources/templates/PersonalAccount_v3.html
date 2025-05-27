@@ -5,7 +5,7 @@
     <title>Личный кабинет CRM</title>
     <link rel="stylesheet" href="css/PersonalAccountStyle_v02.css">
 </head>
-<body th:data-privilege="${user.privilegeLevel}" th:attr="allusers=${#lists.toList(allusers)}">
+<body th:data-privilege="${user.privilegeLevel}">
 <!-- Сайдбар -->
 <div class="sidebar">
     <h2 onclick="showPersonalInfo()">Меню</h2>
